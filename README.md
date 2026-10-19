@@ -1,14 +1,16 @@
-# Polynomial Fitting for Rocket Velocity
+# Rocket Velocity Polynomial Fit
 
 [![CI](https://github.com/juandapradam12/Polynomial-Fitting-For-a-Rocket-Velocity/actions/workflows/ci.yml/badge.svg)](https://github.com/juandapradam12/Polynomial-Fitting-For-a-Rocket-Velocity/actions/workflows/ci.yml)
 
-Portfolio use case: recover a continuous rocket velocity profile from three discrete measurements by fitting the unique quadratic interpolant
+Recover a continuous rocket velocity profile from three discrete samples by fitting a quadratic interpolant and solving the Vandermonde system with Gauss–Jordan elimination (partial pivoting).
+
+The model is
 
 $$
-v(t) = a_2 t^2 + a_1 t + a_0
+v(t) = a_2 t^2 + a_1 t + a_0,
 $$
 
-and solving the resulting Vandermonde system with Gauss–Jordan elimination (partial pivoting).
+cross-checked against `numpy.linalg.solve`, with residual and condition-number diagnostics.
 
 ![Quadratic fit of rocket velocity samples with estimate at t = 7 s](figures/rocket_velocity_fit.png)
 
@@ -50,8 +52,8 @@ $$
 | $a_2, a_1, a_0$ | $0.457$, $21.480$, $1.160$ |
 | $v(7\,\mathrm{s})$ | $173.913\,\mathrm{m/s}$ |
 | Sample residual $\|r\|_2$ | $\sim 10^{-14}$ |
-| $\kappa_2(A)$ | reported by the CLI |
-| $\max\lvert\Delta a\rvert$ vs NumPy | $\sim$ machine epsilon |
+| $\kappa_2(A)$ | $\approx 2.45 \times 10^{2}$ |
+| $\max\lvert\Delta a\rvert$ vs NumPy | $\sim 10^{-15}$ |
 
 ## Project structure
 
