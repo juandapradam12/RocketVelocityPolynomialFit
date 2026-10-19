@@ -15,6 +15,8 @@ def test_default_fit_interpolates_samples() -> None:
     predicted = fit.predict(DEFAULT_OBSERVATIONS.time_s)
     np.testing.assert_allclose(predicted, DEFAULT_OBSERVATIONS.velocity_mps, atol=1e-10)
     assert fit.residual_norm < 1e-10
+    assert fit.condition_number > 1.0
+    assert fit.numpy_max_abs_coeff_delta < 1e-10
 
 
 def test_query_at_seven_seconds_is_positive() -> None:

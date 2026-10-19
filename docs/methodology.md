@@ -46,7 +46,29 @@ The package solves $Ax = b$ by operating on the augmented matrix $[A \mid b]$:
 3. Eliminate all other entries in column $k$.
 4. After $n$ stages, the rightmost column of the reduced matrix is the solution $x$.
 
-Partial pivoting improves numerical robustness relative to a naïve elimination without row exchanges.
+### Why partial pivoting matters
+
+Vandermonde matrices grow rapidly with the node magnitudes, so the 2-norm condition number
+
+$$
+\kappa_2(A) = \|A\|_2 \,\|A^{-1}\|_2
+$$
+
+can become large even for small systems. A large $\kappa_2(A)$ amplifies roundoff: relative perturbations in $A$ or $b$ of size $\varepsilon$ can perturb the computed $x$ by roughly $\kappa_2(A)\,\varepsilon$.
+
+Partial pivoting chooses the largest available entry in the active column as the pivot. That choice reduces the growth of intermediate multipliers and is the standard first defense against catastrophic cancellation in dense elimination. For this three-point problem the matrix remains modestly conditioned, and the custom solver stays within floating-point agreement of `numpy.linalg.solve`.
+
+## Reference cross-check
+
+After Gauss–Jordan, coefficients are compared against NumPy’s LAPACK-backed solve. Agreement is reported as
+
+$$
+\Delta_{\max}
+=
+\max_j \lvert a_j^{\text{GJ}} - a_j^{\text{NumPy}} \rvert.
+$$
+
+For the default samples, $\Delta_{\max}$ is on the order of machine epsilon, which confirms that the pedagogical solver reproduces a production reference on this use case.
 
 ## Query evaluation
 

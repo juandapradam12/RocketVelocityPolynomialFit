@@ -25,6 +25,8 @@ class PolynomialFit:
     coefficients: QuadraticCoefficients
     residual_norm: float
     max_abs_residual: float
+    condition_number: float
+    numpy_max_abs_coeff_delta: float
 
     def predict(self, t: NDArray[np.floating] | float) -> NDArray[np.floating]:
         return self.coefficients.evaluate(t)
@@ -34,7 +36,8 @@ def fit_quadratic_velocity(observations: ObservationSet) -> PolynomialFit:
     """Interpolate rocket velocity with an exact quadratic polynomial.
 
     For three non-collinear samples the Vandermonde system is square and
-    yields a unique interpolating parabola.
+    yields a unique interpolating parabola. Coefficients are also compared
+    against ``numpy.linalg.solve`` as a reference check.
     """
     if observations.n_samples != 3:
         raise ValueError(
@@ -43,6 +46,7 @@ def fit_quadratic_velocity(observations: ObservationSet) -> PolynomialFit:
 
     design = vandermonde_quadratic(observations.time_s)
     coeffs = gauss_jordan_solve(design, observations.velocity_mps)
+    reference = np.linalg.solve(design, observations.velocity_mps)
     model = QuadraticCoefficients(a2=float(coeffs[0]), a1=float(coeffs[1]), a0=float(coeffs[2]))
 
     residuals = model.evaluate(observations.time_s) - observations.velocity_mps
@@ -51,4 +55,6 @@ def fit_quadratic_velocity(observations: ObservationSet) -> PolynomialFit:
         coefficients=model,
         residual_norm=float(np.linalg.norm(residuals)),
         max_abs_residual=float(np.max(np.abs(residuals))),
+        condition_number=float(np.linalg.cond(design)),
+        numpy_max_abs_coeff_delta=float(np.max(np.abs(coeffs - reference))),
     )

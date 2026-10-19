@@ -49,6 +49,11 @@ def main(argv: list[str] | None = None) -> int:
     print(f"  a0 = {coeffs.a0:.6f}")
     print(f"v({args.query_time:g} s) = {velocity:.6f} m/s")
     print(f"Residual L2 norm at samples: {fit.residual_norm:.3e}")
+    print(f"Design-matrix condition number κ₂(A): {fit.condition_number:.3e}")
+    print(
+        "Max |Δa| vs numpy.linalg.solve: "
+        f"{fit.numpy_max_abs_coeff_delta:.3e}"
+    )
     print(f"Figure written to: {figure_path}")
     return 0
 
