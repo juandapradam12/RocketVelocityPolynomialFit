@@ -8,7 +8,6 @@ version = "1.0.0"
 description = "Recover a continuous rocket velocity profile from three discrete samples by fitting a quadratic interpolant and solving the Vandermonde system with Gauss–Jordan elimination (partial pivoting)."
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "MIT" }
 authors = [
   { name = "Juan David Prada Malagon", email = "pradamalagonjd@gmail.com" },
 ]

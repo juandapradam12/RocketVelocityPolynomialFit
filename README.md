@@ -125,7 +125,3 @@ Figures written:
 
 - Python 3.10+
 - NumPy, Matplotlib (declared in `pyproject.toml`)
-
-## License
-
-MIT — see [LICENSE](LICENSE).
