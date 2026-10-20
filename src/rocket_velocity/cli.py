@@ -7,7 +7,7 @@ from pathlib import Path
 
 from rocket_velocity.data import DEFAULT_OBSERVATIONS
 from rocket_velocity.fitting.polynomial import fit_quadratic_velocity
-from rocket_velocity.visualization import plot_velocity_fit
+from rocket_velocity.visualization import generate_all_figures
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -24,10 +24,10 @@ def build_parser() -> argparse.ArgumentParser:
         help="Time (s) at which to evaluate the fitted velocity (default: 7).",
     )
     parser.add_argument(
-        "--figure",
+        "--figures-dir",
         type=Path,
-        default=Path("figures/rocket_velocity_fit.png"),
-        help="Output path for the fit figure.",
+        default=Path("figures"),
+        help="Directory where diagnostic figures are written.",
     )
     return parser
 
@@ -37,9 +37,9 @@ def main(argv: list[str] | None = None) -> int:
     fit = fit_quadratic_velocity(DEFAULT_OBSERVATIONS)
     coeffs = fit.coefficients
     velocity = float(fit.predict(args.query_time))
-    figure_path = plot_velocity_fit(
+    figure_paths = generate_all_figures(
         fit,
-        output_path=args.figure,
+        figures_dir=args.figures_dir,
         query_time_s=args.query_time,
     )
 
@@ -54,7 +54,9 @@ def main(argv: list[str] | None = None) -> int:
         "Max |Δa| vs numpy.linalg.solve: "
         f"{fit.numpy_max_abs_coeff_delta:.3e}"
     )
-    print(f"Figure written to: {figure_path}")
+    print("Figures written:")
+    for name, path in figure_paths.items():
+        print(f"  - {name}: {path}")
     return 0
 
 
