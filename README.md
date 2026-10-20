@@ -1,6 +1,6 @@
 # Rocket Velocity Polynomial Fit
 
-[![CI](https://github.com/juandapradam12/Polynomial-Fitting-For-a-Rocket-Velocity/actions/workflows/ci.yml/badge.svg)](https://github.com/juandapradam12/Polynomial-Fitting-For-a-Rocket-Velocity/actions/workflows/ci.yml)
+[![CI](https://github.com/juandapradam12/RocketVelocityPolynomialFit/actions/workflows/ci.yml/badge.svg)](https://github.com/juandapradam12/RocketVelocityPolynomialFit/actions/workflows/ci.yml)
 
 Recover a continuous rocket velocity profile from three discrete samples by fitting a quadratic interpolant and solving the Vandermonde system with Gauss–Jordan elimination (partial pivoting).
 
@@ -12,7 +12,23 @@ $$
 
 cross-checked against `numpy.linalg.solve`, with residual and condition-number diagnostics.
 
+## Figures
+
+Quadratic interpolant through the measured samples, with the query at $t = 7\,\mathrm{s}$:
+
 ![Quadratic fit of rocket velocity samples with estimate at t = 7 s](figures/rocket_velocity_fit.png)
+
+Interpolation residuals at the sample nodes (machine-precision scale):
+
+![Residuals of the quadratic interpolant at sample times](figures/rocket_velocity_residuals.png)
+
+Acceleration implied by differentiating the fitted velocity, $a(t) = 2 a_2 t + a_1$:
+
+![Implied acceleration profile from the velocity fit](figures/rocket_acceleration_profile.png)
+
+Coefficient agreement between the custom Gauss–Jordan solver and `numpy.linalg.solve`:
+
+![Coefficient comparison between Gauss-Jordan and NumPy](figures/solver_coefficient_agreement.png)
 
 ## Use case
 
@@ -23,7 +39,7 @@ cross-checked against `numpy.linalg.solve`, with residual and condition-number d
 | **Model** | Exact quadratic interpolant |
 | **Solver** | Custom Gauss–Jordan on the augmented matrix |
 | **Reference** | Cross-checked against `numpy.linalg.solve` |
-| **Output** | Coefficients, $v(7\,\mathrm{s})$, residual / condition diagnostics, fit figure |
+| **Output** | Coefficients, $v(7\,\mathrm{s})$, residual / condition diagnostics, diagnostic figures |
 
 Measured samples:
 
@@ -62,7 +78,7 @@ src/rocket_velocity/   # Installable package (models, solver, fitting, CLI)
 scripts/run_fit.py     # Run without installing
 tests/                 # Solver and fitting tests
 docs/                  # Methodology and architecture
-figures/               # Generated fit plot
+figures/               # Generated diagnostic plots
 .github/workflows/     # CI
 ```
 
@@ -89,7 +105,11 @@ v(7 s) = ... m/s
 Residual L2 norm at samples: ...
 Design-matrix condition number κ₂(A): ...
 Max |Δa| vs numpy.linalg.solve: ...
-Figure written to: figures/rocket_velocity_fit.png
+Figures written:
+  - velocity_fit: figures/rocket_velocity_fit.png
+  - residuals: figures/rocket_velocity_residuals.png
+  - acceleration: figures/rocket_acceleration_profile.png
+  - solver_agreement: figures/solver_coefficient_agreement.png
 ```
 
 ## Improvements over the legacy script
@@ -105,7 +125,3 @@ Figure written to: figures/rocket_velocity_fit.png
 
 - Python 3.10+
 - NumPy, Matplotlib (declared in `pyproject.toml`)
-
-## License
-
-MIT — see [LICENSE](LICENSE).
