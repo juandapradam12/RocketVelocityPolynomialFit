@@ -69,9 +69,9 @@ a_0 \\
 | --- | --- |
 | $`a_2, a_1, a_0`$ | $`0.457`$, $`21.480`$, $`1.160`$ |
 | $`v(7\,\mathrm{s})`$ | $`173.913\,\mathrm{m/s}`$ |
-| Sample residual $`\|r\|_2`$ | $`\sim 10^{-14}`$ |
+| Sample residual $`\lVert r \rVert_2`$ | $`\sim 10^{-14}`$ |
 | $`\kappa_2(A)`$ | $`\approx 2.45 \times 10^{2}`$ |
-| $`\max\left\|\Delta a\right\|`$ vs NumPy | $`\sim 10^{-15}`$ |
+| $`\max\left\lvert \Delta a \right\rvert`$ vs NumPy | $`\sim 10^{-15}`$ |
 
 ## Project structure
 

@@ -51,7 +51,7 @@ The package solves $`Ax = b`$ by operating on the augmented matrix $`[A \mid b]`
 Vandermonde matrices grow rapidly with the node magnitudes, so the 2-norm condition number
 
 ```math
-\kappa_2(A) = \|A\|_2 \, \|A^{-1}\|_2
+\kappa_2(A) = \lVert A \rVert_2 \, \lVert A^{-1} \rVert_2
 ```
 
 can become large even for small systems. A large $`\kappa_2(A)`$ amplifies roundoff: relative perturbations in $`A`$ or $`b`$ of size $`\varepsilon`$ can perturb the computed $`x`$ by roughly $`\kappa_2(A)\,\varepsilon`$.
