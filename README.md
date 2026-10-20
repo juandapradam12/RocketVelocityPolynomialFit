@@ -1,6 +1,6 @@
 # Rocket Velocity Polynomial Fit
 
-[![CI](https://github.com/juandapradam12/Polynomial-Fitting-For-a-Rocket-Velocity/actions/workflows/ci.yml/badge.svg)](https://github.com/juandapradam12/Polynomial-Fitting-For-a-Rocket-Velocity/actions/workflows/ci.yml)
+[![CI](https://github.com/juandapradam12/RocketVelocityPolynomialFit/actions/workflows/ci.yml/badge.svg)](https://github.com/juandapradam12/RocketVelocityPolynomialFit/actions/workflows/ci.yml)
 
 Recover a continuous rocket velocity profile from three discrete samples by fitting a quadratic interpolant and solving the Vandermonde system with Gauss–Jordan elimination (partial pivoting).
 
