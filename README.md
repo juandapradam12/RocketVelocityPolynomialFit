@@ -6,15 +6,15 @@ Recover a continuous rocket velocity profile from three discrete samples by fitt
 
 The model is
 
-$$
+```math
 v(t) = a_2 t^2 + a_1 t + a_0,
-$$
+```
 
 cross-checked against `numpy.linalg.solve`, with residual and condition-number diagnostics.
 
 ## Figures
 
-Quadratic interpolant through the measured samples, with the query at $t = 7\,\mathrm{s}$:
+Quadratic interpolant through the measured samples, with the query at $`t = 7\,\mathrm{s}`$:
 
 ![Quadratic fit of rocket velocity samples with estimate at t = 7 s](figures/rocket_velocity_fit.png)
 
@@ -22,7 +22,7 @@ Interpolation residuals at the sample nodes (machine-precision scale):
 
 ![Residuals of the quadratic interpolant at sample times](figures/rocket_velocity_residuals.png)
 
-Acceleration implied by differentiating the fitted velocity, $a(t) = 2 a_2 t + a_1$:
+Acceleration implied by differentiating the fitted velocity, $`a(t) = 2 a_2 t + a_1`$:
 
 ![Implied acceleration profile from the velocity fit](figures/rocket_acceleration_profile.png)
 
@@ -35,41 +35,43 @@ Coefficient agreement between the custom Gauss–Jordan solver and `numpy.linalg
 | Item | Detail |
 | --- | --- |
 | **Domain** | Scientific computing / numerical methods |
-| **Input** | Time–velocity samples at $t \in \{2, 5, 9\}\,\mathrm{s}$ |
+| **Input** | Time–velocity samples at $`t \in \{2, 5, 9\}\,\mathrm{s}`$ |
 | **Model** | Exact quadratic interpolant |
 | **Solver** | Custom Gauss–Jordan on the augmented matrix |
 | **Reference** | Cross-checked against `numpy.linalg.solve` |
-| **Output** | Coefficients, $v(7\,\mathrm{s})$, residual / condition diagnostics, diagnostic figures |
+| **Output** | Coefficients, $`v(7\,\mathrm{s})`$, residual / condition diagnostics, diagnostic figures |
 
 Measured samples:
 
-$$
+```math
 (t, v) = (2,\,45.948),\; (5,\,119.985),\; (9,\,231.497)
 \quad [t] = \mathrm{s},\; [v] = \mathrm{m/s}.
-$$
+```
 
 The linear system enforced by the interpolant is
 
-$$
+```math
 \begin{bmatrix}
 t_i^2 & t_i & 1
 \end{bmatrix}
 \begin{bmatrix}
-a_2 \\ a_1 \\ a_0
+a_2 \\
+a_1 \\
+a_0 \\
 \end{bmatrix}
 = v_i,
 \quad i = 1,2,3.
-$$
+```
 
 ## Result snapshot
 
 | Quantity | Value |
 | --- | --- |
-| $a_2, a_1, a_0$ | $0.457$, $21.480$, $1.160$ |
-| $v(7\,\mathrm{s})$ | $173.913\,\mathrm{m/s}$ |
-| Sample residual $\|r\|_2$ | $\sim 10^{-14}$ |
-| $\kappa_2(A)$ | $\approx 2.45 \times 10^{2}$ |
-| $\max\lvert\Delta a\rvert$ vs NumPy | $\sim 10^{-15}$ |
+| $`a_2, a_1, a_0`$ | $`0.457`$, $`21.480`$, $`1.160`$ |
+| $`v(7\,\mathrm{s})`$ | $`173.913\,\mathrm{m/s}`$ |
+| Sample residual $`\|r\|_2`$ | $`\sim 10^{-14}`$ |
+| $`\kappa_2(A)`$ | $`\approx 2.45 \times 10^{2}`$ |
+| $`\max\left\|\Delta a\right\|`$ vs NumPy | $`\sim 10^{-15}`$ |
 
 ## Project structure
 
